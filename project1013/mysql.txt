@@ -1,0 +1,253 @@
+Enter password: ****
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 14
+Server version: 10.3.13-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> node
+    -> /
+    -> show tables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'node
+/
+show tables' at line 1
+MariaDB [(none)]> use node
+Database changed
+MariaDB [node]> show tables;
++----------------+
+| Tables_in_node |
++----------------+
+| member         |
++----------------+
+1 row in set (0.001 sec)
+
+MariaDB [node]> select *from member;
++-----------+-----------+----------+---------+------+---------------------+
+| member_id | firstname | lastname | local   | msg  | regdate             |
++-----------+-----------+----------+---------+------+---------------------+
+|         1 | zino      | min      | gangnam | hi   | 2020-10-12 16:20:09 |
+|         2 | eojin     | lee      | incheon | xd   | 2020-10-12 16:35:33 |
++-----------+-----------+----------+---------+------+---------------------+
+2 rows in set (0.010 sec)
+
+MariaDB [node]> create table hclass(
+    -> hclass_id int primary key auto_increment
+    -> , id varchar(20)
+    -> , pass varchar(20)
+    -> ) default character set utf-8;
+ERROR 1115 (42000): Unknown character set: 'utf'
+MariaDB [node]> create table hclass(
+    -> hclass_id int primary key auto_increment
+    -> , id varchar(20)
+    -> , pass varchar(20)
+    -> ) default character set utf8;
+Query OK, 0 rows affected (0.029 sec)
+
+MariaDB [node]> insert into hclass(id,pass) values('admin','1234');
+Query OK, 1 row affected (0.005 sec)
+
+MariaDB [node]> select *from hclass
+    -> ;
++-----------+-------+------+
+| hclass_id | id    | pass |
++-----------+-------+------+
+|         1 | admin | 1234 |
++-----------+-------+------+
+1 row in set (0.000 sec)
+
+MariaDB [node]> create table hclass(
+    -> hclass_id int primary key auto_increment
+    -> , id varchar(20)
+    -> , pass varchar(20)
+    -> ) default character set utf8;
+ERROR 1050 (42S01): Table 'hclass' already exists
+MariaDB [node]> cls
+    -> /
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'cls
+/' at line 1
+MariaDB [node]> use node;
+Database changed
+MariaDB [node]> select *from hclass where id='batman' and pass='7777';
+Empty set (0.021 sec)
+
+MariaDB [node]> select *from hclass where id='admin' and pass='1234';
++-----------+-------+------+
+| hclass_id | id    | pass |
++-----------+-------+------+
+|         1 | admin | 1234 |
++-----------+-------+------+
+1 row in set (0.003 sec)
+
+MariaDB [node]> create  table  member2(
+    ->  member2_id  int primary key  auto_increment
+    ->  , uid  varchar(20)
+    ->  , password varchar(20)
+    ->  , uname varchar(20)
+    ->  , phone varchar(13)
+    ->  , email varchar(50)
+    ->  , addr varchar(100)
+    ->  , memo text
+    -> ) default character set utf8;
+Query OK, 0 rows affected (0.045 sec)
+
+MariaDB [node]> desc member2;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| member2_id | int(11)      | NO   | PRI | NULL    | auto_increment |
+| uid        | varchar(20)  | YES  |     | NULL    |                |
+| password   | varchar(20)  | YES  |     | NULL    |                |
+| uname      | varchar(20)  | YES  |     | NULL    |                |
+| phone      | varchar(13)  | YES  |     | NULL    |                |
+| email      | varchar(50)  | YES  |     | NULL    |                |
+| addr       | varchar(100) | YES  |     | NULL    |                |
+| memo       | text         | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+8 rows in set (0.021 sec)
+
+MariaDB [node]> drop table member2;
+Query OK, 0 rows affected (0.042 sec)
+
+MariaDB [node]> create  table  member2(
+    ->  member2_id  int primary key  auto_increment
+    ->  , uid  varchar(20)
+    ->  , password varchar(20)
+    ->  , uname varchar(20)
+    ->  , phone varchar(13)
+    ->  , email varchar(50)
+    ->  , receive varchar(3)
+    ->  , addr varchar(100)
+    ->  , memo text
+    -> ) default character set utf8
+    -> ;
+Query OK, 0 rows affected (0.014 sec)
+
+MariaDB [node]> desc member2;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| member2_id | int(11)      | NO   | PRI | NULL    | auto_increment |
+| uid        | varchar(20)  | YES  |     | NULL    |                |
+| password   | varchar(20)  | YES  |     | NULL    |                |
+| uname      | varchar(20)  | YES  |     | NULL    |                |
+| phone      | varchar(13)  | YES  |     | NULL    |                |
+| email      | varchar(50)  | YES  |     | NULL    |                |
+| receive    | varchar(3)   | YES  |     | NULL    |                |
+| addr       | varchar(100) | YES  |     | NULL    |                |
+| memo       | text         | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+9 rows in set (0.012 sec)
+
+MariaDB [node]> create table skill(
+    ->  skill_id int primary key auto_increment
+    -> , name varchar(20)
+    -> );
+Query OK, 0 rows affected (0.015 sec)
+
+MariaDB [node]> desc skill;
++----------+-------------+------+-----+---------+----------------+
+| Field    | Type        | Null | Key | Default | Extra          |
++----------+-------------+------+-----+---------+----------------+
+| skill_id | int(11)     | NO   | PRI | NULL    | auto_increment |
+| name     | varchar(20) | YES  |     | NULL    |                |
++----------+-------------+------+-----+---------+----------------+
+2 rows in set (0.012 sec)
+
+MariaDB [node]> create table member_skill(
+    ->   member_skill_id int primary key auto_increment
+    -> , member2_id int
+    -> , skill_id int
+    -> ,foreign key (member2_id) references member2(member2_id)
+    -> ,foreign key (skill_id) references skill(skill_id)
+    -> );
+Query OK, 0 rows affected (0.018 sec)
+
+MariaDB [node]> desc member2;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| member2_id | int(11)      | NO   | PRI | NULL    | auto_increment |
+| uid        | varchar(20)  | YES  |     | NULL    |                |
+| password   | varchar(20)  | YES  |     | NULL    |                |
+| uname      | varchar(20)  | YES  |     | NULL    |                |
+| phone      | varchar(13)  | YES  |     | NULL    |                |
+| email      | varchar(50)  | YES  |     | NULL    |                |
+| receive    | varchar(3)   | YES  |     | NULL    |                |
+| addr       | varchar(100) | YES  |     | NULL    |                |
+| memo       | text         | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+9 rows in set (0.008 sec)
+
+MariaDB [node]> desc skill;
++----------+-------------+------+-----+---------+----------------+
+| Field    | Type        | Null | Key | Default | Extra          |
++----------+-------------+------+-----+---------+----------------+
+| skill_id | int(11)     | NO   | PRI | NULL    | auto_increment |
+| name     | varchar(20) | YES  |     | NULL    |                |
++----------+-------------+------+-----+---------+----------------+
+2 rows in set (0.008 sec)
+
+MariaDB [node]> desc member_skill;
++-----------------+---------+------+-----+---------+----------------+
+| Field           | Type    | Null | Key | Default | Extra          |
++-----------------+---------+------+-----+---------+----------------+
+| member_skill_id | int(11) | NO   | PRI | NULL    | auto_increment |
+| member2_id      | int(11) | YES  | MUL | NULL    |                |
+| skill_id        | int(11) | YES  | MUL | NULL    |                |
++-----------------+---------+------+-----+---------+----------------+
+3 rows in set (0.011 sec)
+
+MariaDB [node]> insert into skill(name) values('java');
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [node]> insert into skill(name) values('oracle');
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [node]> insert into skill(name) values('android');
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [node]> insert into skill(name) values('python');
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [node]> insert into skill(name) values('swift');
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [node]> insert into skill(name) values('R');
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [node]> select *from skill;
++----------+---------+
+| skill_id | name    |
++----------+---------+
+|        1 | java    |
+|        2 | oracle  |
+|        3 | android |
+|        4 | python  |
+|        5 | swift   |
+|        6 | R       |
++----------+---------+
+6 rows in set (0.000 sec)
+
+MariaDB [node]> select *from member2;
++------------+-------+----------+--------+-------------+-------+---------+--------+---------------+
+| member2_id | uid   | password | uname  | phone       | email | receive | addr   | memo          |
++------------+-------+----------+--------+-------------+-------+---------+--------+---------------+
+|          1 | eojin | 1234     | 이어진 | 01012345678 | NULL  | on      | 인천   | <p>ㅎㅇ</p>
+ |
+|          2 | eojin | 1234     | 이어진 | 01012345678 | NULL  | yes     | 연수구 | <p>안녕</p>
+ |
++------------+-------+----------+--------+-------------+-------+---------+--------+---------------+
+2 rows in set (0.003 sec)
+
+MariaDB [node]> delete *from member2 where member2_id=1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '*from member2 where member2_id=1' at line 1
+MariaDB [node]> delete *from member2 where member2_id==1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '*from member2 where member2_id==1' at line 1
+MariaDB [node]> delete *from member2 where member2_id==1;
+
+
+
+node ./server2.js
